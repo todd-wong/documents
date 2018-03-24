@@ -117,8 +117,6 @@ Emscripten[支持的库](http://kripken.github.io/emscripten-site/docs/introduci
 ![](http://kripken.github.io/emscripten-site/_images/FileSystemArchitecture.png)
 
 ## C/C++和JavaScript代码交互
-* ###c/c++调用js
-    *
 * ###js调用c函数
     * [使用ccall或cwrap](http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#calling-compiled-c-functions-from-javascript-using-ccall-cwrap)。
     * [直接调用编译的C/C++代码](http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#call-compiled-c-c-code-directly-from-javascript)。
@@ -146,7 +144,9 @@ int int_sqrt(int x) {
 
 
 * ###[通过Embind调用C++类](http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/embind.html)
-```
+
+
+``` cplusplus
 #include <emscripten/bind.h>
   
 class MyClass {
@@ -181,10 +181,123 @@ EMSCRIPTEN_BINDINGS(my_class_example) {
     .class_function("getStringFromInstance", &MyClass::getStringFromInstance)
     ;
 }
+
 ```
+保存为myclass.cpp，运行
+> $>emcc myclass.cpp --bind -o myclass.html -s WASM=1
+> $>emrun --no_browser --port 8888 myclass.html
+
+打开Devtools，结果如下：
+![](/assets/embind_result.png)
+
+* ###[通过WebIDL Binder调用C++类](http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/WebIDL-Binder.html)
+
+``` IDL
+interface Foo {
+    void Foo(long v);
+    long getVal();
+    void setVal(long v);
+    void print();
+};
+```
+保存为myclass.idl，运行
+> $>python ~/emsdk/emscripten/1.37.36/tools/webidl_binder.py myclass.idl glue
+
+``` cplusplus
+
+#ifndef __MYCLASS__
+#define __MYCLASS__
+
+class Foo {
+ public:
+  Foo(int val);
+  int getVal();
+  void setVal(int val);
+  void print();
+
+ private:
+  int val_;
+};
+
+#endif
+
+```
+保存为myclass.h，
+``` cplusplus
+
+#include "myclass.h"
+  
+#include <iostream>
+
+Foo::Foo(int val) : val_(val) {}
+
+int Foo::getVal() {
+  return val_;
+}
+
+void Foo::setVal(int val) {
+  val_ = val;
+}
+
+void Foo::print() {
+  std::cout << "Hello WebIDL.\n";
+}
+
+```
+保存为myclass.cpp，
+``` cplusplus
+
+#include "myclass.h"
+#include "glue.cpp"
+
+```
+保存为myclass_wrapper.cpp，运行
+> $>emcc myclass.cpp myclass_wrapper.cpp --post-js glue.js -o output.html -s WASM=1
+> $>emrun --no_browser --port 8888 output.html
+
+最终结果如下：
+![](/assets/idl_result.png)
+
+* ###C/C++调用JavaScript
+    * ####[emscripten_run_script](http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#interacting-with-code-call-javascript-from-native)
+    * ####[EM_ASM](http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#interacting-with-code-call-javascript-from-native)
+    * ####[JavaScript实现C函数](http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#implement-a-c-api-in-javascript)
+
+``` cplusplus
+
+extern void my_js(void);
+  
+int main()
+{
+  my_js();
+  return 1;
+}
+
+```
+保存为main.c，
+``` javascript
+
+mergeInto(LibraryManager.library, {
+  my_js: function() {
+    console.log('this is my js run.');
+  }
+});
+
+```
+保存为my_lib.js，运行：
+> $>emcc main.c -o main.html -s WASM=1 --js-library my_lib.js
+
+最终结果如下：
+![](/assets/cfun_result.png)
+
+## [与页面元素交互](http://kripken.github.io/emscripten-site/docs/api_reference/index.html)
+* ####html5(参考html5.h)
+* ####其他可查询(emscripten.h/val.h/bind.h)
+
+实例参考：<http://www.rossis.red/wasm.html>
+
 ## 适用领域
-* CPU密集型任务（数值计算、图片处理等）
-* 游戏
+* CPU密集型任务（数值计算、游戏、图片处理等）
 
 参考资料：
 <https://blog.sessionstack.com/how-javascript-works-a-comparison-with-webassembly-why-in-certain-cases-its-better-to-use-it-d80945172d79>
