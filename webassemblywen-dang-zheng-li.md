@@ -146,7 +146,7 @@ int int_sqrt(int x) {
 
 
 * ###[通过Embind调用C++类](http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/embind.html)
-``` c
+```
 #include <emscripten/bind.h>
   
 class MyClass {
