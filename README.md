@@ -1,5 +1,7 @@
 ## Vim常用的快捷键
 
+Ctrl + c或Ctrl + [代替Esc键
+
 * ### 字符移动
 
   * h &lt;--&gt;左
