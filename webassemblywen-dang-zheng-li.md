@@ -100,7 +100,7 @@
 对于C/C++代码移植，现在有两种选择：
 
 * C/C++ =&gt; asm2wasm =&gt;WebAssembly\(with emcc\)
-* C/C++ =&gt; WebAssembly LLVM backend =&gt; s2wasm =&gt; WebAssembly\(without emcc\)
+* C/C++ =&gt; WebAssembly LLVM backend =&gt; s2wasm =&gt; WebAssembly\([binaryen](https://github.com/WebAssembly/binaryen), without emcc\)
 
 基于asm.js项目比较成熟，且是官方推荐，主流选择第一种方式——[Emscripten](http://kripken.github.io/emscripten-site/docs/introducing_emscripten/index.html)\(具体安装见  
 [https://github.com/kripken/emscripten](https://github.com/kripken/emscripten)\)。
