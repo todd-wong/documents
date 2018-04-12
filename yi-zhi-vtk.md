@@ -1,6 +1,6 @@
 ### Emscripten编译vtk Project
 
-1、git clone vtk source。  
+1、git clone vtk source。
 2、ccmake target dir，设置BUILD\_TESTING=OFF，CMAKE\_BUILD\_TYPE=Release，           CMAKE\_INSTALL\_PREFIX=/target/path/to/vtk/build。  
 3、emmake make  
 4、make install
