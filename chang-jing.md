@@ -1,4 +1,7 @@
+## Embind
+Embind用于将C++函数和类绑定到JavaScript，以便通过JavaScript调用c++接口。同时Embind还支持从C++调用javaScript。
 
+## 范例
 test.cc:
 
 ``` cplusplus
@@ -282,3 +285,8 @@ class value_object : public internal::noncopyable {
 2、自定义智能指针需特化smart_ptr_trait。
 
 ### 重载函数(select_overload)、覆写binding函数(optional_override)
+
+参考：
+1、[https://fr.slideshare.net/chadaustin/connecting-c-and-javascript-on-the-web-with-embind](https://fr.slideshare.net/chadaustin/connecting-c-and-javascript-on-the-web-with-embind)
+2、[https://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/embind.html](https://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/embind.html)
+3、[https://hunyadi.info.hu/research/talks/hunyadi2015emscripten.pdf](https://hunyadi.info.hu/research/talks/hunyadi2015emscripten.pdf)
