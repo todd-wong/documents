@@ -22,3 +22,8 @@ torch-0.3.1-cp27-cp27mu-manylinux1_x86_64.whl
 
 
 mount -t cifs //10.10.0.139/Share /mnt -o user=ruitaow,password=Wang231147
+
+sudo mount -o username=jung,password=  //10.10.0.139/Share/lijing ~/uploadnas
+
+mac
+mount -t smbfs //ruitaow:Wang231147@10.10.0.139/Share ~/NAS
