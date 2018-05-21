@@ -38,4 +38,5 @@ tool编译
 1. cd web; npm install
 2. apt-get install libxcb-render-util0 libxcb-image0 libxcb-icccm4  libxcb-shm0 libxcb-keysyms1 libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0
 3. cd tool/build/;git clone git@internal.curacloudcorp.com
+4. cp 3rd_party/linux
 4. ./tool/package_web.sh
