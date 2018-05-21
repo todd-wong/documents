@@ -27,3 +27,15 @@ sudo mount -o username=jung,password=  //10.10.0.139/Share/lijing ~/uploadnas
 
 mac
 mount -t smbfs //ruitaow:Wang231147@10.10.0.139/Share ~/NAS
+
+pytest --case=AZBWZ -v Scripts/UnitTest/v0.0.3/test_image_analysis_dv2.py
+pytest --case=AZLJZH -v Scripts/UnitTest/v0.0.3/test_image_analysis_dv2.py
+pytest --case=AZLXY -v Scripts/UnitTest/v0.0.3/test_image_analysis_dv2.py
+pytest --case=AZYZM -v Scripts/UnitTest/v0.0.3/test_image_analysis_dv2.py
+pytest --case=AZZDJ -v Scripts/UnitTest/v0.0.3/test_image_analysis_dv2.py
+
+tool编译
+1. cd web; npm install
+2. apt-get install libxcb-render-util0 libxcb-image0 libxcb-icccm4  libxcb-shm0 libxcb-keysyms1 libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0
+3. cd tool/build/;git clone git@internal.curacloudcorp.com
+4. ./tool/package_web.sh
