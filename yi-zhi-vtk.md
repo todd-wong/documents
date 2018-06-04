@@ -11,7 +11,7 @@
 
 ### Binding vtk接口
 
-vtk\_wrap.cc:
+vtk\_binding.cc:
 
 ```cplusplus
 #include <iostream>                                                                                                                                   
@@ -146,11 +146,6 @@ class_<vtkNIFTIImageReader, base<vtkImageReader2>>("vtkNIFTIImageReader")
     .smart_ptr_constructor("vtkSmartPointer<vtkNIFTIImageReader>", &vtkSmartPointer<vtkNIFTIImageReader>::New)
     ;
 
-class_<vtkNIFTIImageReaderWrapper, base<vtkNIFTIImageReader>>("vtkNIFTIImageReaderWrapper")
-    //.smart_ptr_constructor("vtkSmartPointer<vtkNIFTIImageReaderWrapper>", &vtkSmartPointer<vtkNIFTIImageReaderWrapper>::New)
-    .constructor()
-    ;
-
 class_<vtkPolyDataAlgorithm, base<vtkAlgorithm>>("vtkPolyDataAlgorithm")
     .smart_ptr_constructor("vtkSmartPointer<vtkPolyDataAlgorithm>", &vtkSmartPointer<vtkPolyDataAlgorithm>::New)
     .function("GetOutput", select_overload<vtkPolyData*()>(&vtkPolyDataAlgorithm::GetOutput), allow_raw_pointers())
@@ -189,7 +184,7 @@ CFLAGS = -std=c++11 --bind -Os -s ASSERTIONS=1 -s WASM=1 -s ALLOW_MEMORY_GROWTH=
 INC = -I/Users/todd.wong/vtk/include/vtk-9.0
 LIB_PATH = -L/Users/todd.wong/vtk/lib
 VTK_LIBS = -lvtksys-9.0 -lvtkCommonCore-9.0 -lvtkCommonMath-9.0 -lvtkCommonSystem-9.0 -lvtkCommonMisc-9.0 -lvtkCommonDataModel-9.0 -lvtkCommonExecutionModel-9.0 -lvtkIOCore-9.0 -lvtkFiltersCore-9.0 -lvtkFiltersGeneral-9.0 -lvtkFiltersGeometry-9.0 -lvtkIOXML-9.0  -lvtkImagingCore-9.0 -lvtkImagingStatistics-9.0 -lvtkmetaio-9.0 -lvtkIOImage-9.0 -lvtkIOPLY-9.0 -lvtkzlib-9.0
-SRCS = vtk_wrap.cc
+SRCS = vtk_binding.cc
 
 index.html : $(SRCS)
   $(CC) $^ $(LIB_PATH) $(VTK_LIBS) $(INC) $(CFLAGS) -o $@
