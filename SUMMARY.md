@@ -5,6 +5,6 @@
 * [Embind用法](chang-jing.md)
 * [移植vtk](yi-zhi-vtk.md)
 * [项目移植](xiang-mu-yi-zhi.md)
-* [docker](docker.md)
+* [others](docker.md)
 * [Tool项目](toolxiang-mu.md)
 
