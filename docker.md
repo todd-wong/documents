@@ -40,3 +40,5 @@ tool编译
 3. cd tool/build/;git clone git@internal.curacloudcorp.com:cc/gyp.git
 4. cp 3rd_party/linux
 4. ./tool/package_web.sh
+
+imageViewer查看mhd文件
