@@ -29,3 +29,5 @@ define printqstring
 end
 
 ```
+
+set follow-fork-mode [parent|child]
