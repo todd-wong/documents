@@ -42,3 +42,7 @@ tool编译
 4. ./tool/package_web.sh
 
 imageViewer查看mhd文件
+
+itk::CudaResampleImageFilter<itk::Image<short, 3u>, itk::Image<short, 3u>, double, double>::GenerateData
+
+itk::ImageFileReader<itk::Image<short, 3u>, itk::DefaultConvertPixelTraits<short> >::GenerateData
