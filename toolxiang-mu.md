@@ -31,3 +31,11 @@ end
 ```
 
 set follow-fork-mode [parent|child]
+
+pull deepvessel code: open  https://gitlab.com in browser,  username: admin@curacloudcorp.com pw: Drongeekgen7 add sshkey  then: git clone git@gitlab.com:youbingy/deep-vessel.git
+
+run prediction.py need put libcudnn.so.6.61.0 to /usr/lib/x86_64-linux-gnu path  and make soft link for libcudnn.so and libcudnn.so.6 from libcudnn.so.6.61.0
+
+pyinstaller --hidden-import=sklearn.neighbors.typedefs --paths="/home/curacloud/CAD/FFR/deep-vessel" FFR_Test.py
+
+pyinstaller --hidden-import=sklearn.neighbors.typedefs --paths="/home/curacloud/CAD/FFR/deep-vessel" cl_label_feature.py
