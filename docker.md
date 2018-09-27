@@ -49,4 +49,4 @@ itk::ImageFileReader<itk::Image<short, 3u>, itk::DefaultConvertPixelTraits<short
 
 肺结节和脑出血算法路径：/10.10.0.139/share/CuraRad/tmp/CuraRAD
 
-pipreqs
+pipreqs生成python依赖库的require.txt
