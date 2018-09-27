@@ -48,3 +48,5 @@ itk::CudaResampleImageFilter<itk::Image<short, 3u>, itk::Image<short, 3u>, doubl
 itk::ImageFileReader<itk::Image<short, 3u>, itk::DefaultConvertPixelTraits<short> >::GenerateData
 
 肺结节和脑出血算法路径：/10.10.0.139/share/CuraRad/tmp/CuraRAD
+
+pipreqs
