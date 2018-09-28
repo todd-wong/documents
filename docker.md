@@ -52,7 +52,7 @@ itk::ImageFileReader<itk::Image<short, 3u>, itk::DefaultConvertPixelTraits<short
 pipreqs生成python依赖库的require.txt
 
 
-
+username: admin@curacloudcorp.com pw: Drongeekgen7
 
 curarad-ich discussion(2018-9-28):
 1、 mrn, accession 确认是否required
