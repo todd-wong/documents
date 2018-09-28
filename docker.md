@@ -50,3 +50,11 @@ itk::ImageFileReader<itk::Image<short, 3u>, itk::DefaultConvertPixelTraits<short
 肺结节和脑出血算法路径：/10.10.0.139/share/CuraRad/tmp/CuraRAD
 
 pipreqs生成python依赖库的require.txt
+
+
+
+
+1、 mrn, accession 确认是否required
+2、 确认dicom接收是否设置timeout
+3、 软件实现的细节补充
+4、 comments的答复
