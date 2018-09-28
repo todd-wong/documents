@@ -54,6 +54,7 @@ pipreqs生成python依赖库的require.txt
 
 
 
+curarad-ich discussion:
 1、 mrn, accession 确认是否required
 2、 确认dicom接收是否设置timeout
 3、 软件实现的细节补充
