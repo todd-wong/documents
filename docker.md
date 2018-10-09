@@ -59,3 +59,35 @@ curarad-ich discussion(2018-9-28):
 2、 确认dicom接收是否设置timeout
 3、 软件实现的细节补充
 4、 comments的答复
+
+reply: ich-server and pacs-server are wrapped in to each docker, but AI algorithm scripts are placed in the directory. 
+
+transferring encrypted cases meta info with aes-256-cbc(base64)
+
+case info:
+ {
+   "uid":"1.2.123.117531.20.35651.53481.20170712.140521.3570254",
+     "mrn":"A114789",
+     "accession":"A12155781",
+     "type": "ICH",
+     "imageCount":100,
+     "addition": {
+       "procedureName": "procedure name",
+       "modality": "CT",
+       "examReason": "",
+       "contrast": "",
+       "gender": "M",
+       "age": 40,
+       "history": "",
+     }
+当前ich-server只需要uid(study instance uid)和imageCount字段，uid用于分辨具体case，而imageCount用于判断传输数据是否完成。
+mrn和accession字段是clario方需要携带的信息，用于匹配
+type是基于有可能不止ich一个项目的考虑
+addition可去
+
+mysql用于记录分析请求
+多个请求排队执行，始终只有一个在运行算法
+若一个请求数据未完成，会始终停留在waiting状态，没做任何超时处理，通过mysql可查询waiting的task。数据库中的item未添加时间戳
+
+waiting->pending->run->finished
+
