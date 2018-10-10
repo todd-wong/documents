@@ -54,6 +54,8 @@ pipreqs生成python依赖库的require.txt
 
 username: admin@curacloudcorp.com pw: Drongeekgen7
 
+curl 10.199.10.10:80/analysis -d IaSVT5%2BWWcp0bmIBBlzcnA%3D%3D%7CUI5o0SgOUqDQL9doXuxLSKohg81BWZQh2uXCdzsUYU9pty%2BEQRTOGmcpejshTy8ajR1C%2BfvSrJTkZY9Jyq5jlj%2Fo2lmA%2Batsou4AJl7VNrErO8%2Bb6Us6kw8hv8HMK%2Bx1hx%2B8HOetQoyZoKlK54659vlJsBgpaPylwyP%2Bdsr6o3w93b4YrGEH1cRjdibakeXlZfrce3a%2FAzPr4c%2FZlTwOtXFxUHEHyxw9cIopLgHE2UqEMZisPj9aK5gPJScvgk7cbFY2dUvSbfBO01hgQgdgJvsIb795ztHtgbLgxWaJ3e5fGbRbe6GTTw3JrsRVzPWvR9qv7C7ISGkqv3GGIm5wOA%3D%3D
+
 curarad-ich discussion(2018-9-28):
 1、 mrn, accession 确认是否required
 2、 确认dicom接收是否设置timeout
@@ -80,6 +82,7 @@ case info:
        "age": 40,
        "history": "",
      }
+ }
 当前ich-server只需要uid(study instance uid)和imageCount字段，uid用于分辨具体case，而imageCount用于判断传输数据是否完成。
 mrn和accession字段是clario方需要携带的信息，用于匹配
 type是基于有可能不止ich一个项目的考虑
@@ -90,4 +93,7 @@ mysql用于记录分析请求
 若一个请求数据未完成，会始终停留在waiting状态，没做任何超时处理，通过mysql可查询waiting的task。数据库中的item未添加时间戳
 
 waiting->pending->run->finished
+
+tensorflow extension
+
 
