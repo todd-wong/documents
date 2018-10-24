@@ -83,6 +83,7 @@ case info:
        "history": "",
      }
  }
+ich-server just require uid(study instance uid) and imageCount, but clario need mrn and accession for their matching info
 当前ich-server只需要uid(study instance uid)和imageCount字段，uid用于分辨具体case，而imageCount用于判断传输数据是否完成。
 mrn和accession字段是clario方需要携带的信息，用于匹配
 type是基于有可能不止ich一个项目的考虑
@@ -94,6 +95,228 @@ mysql用于记录分析请求
 
 waiting->pending->run->finished
 
+logs
+
 tensorflow extension
 
+当clario端send request，服务端会记录请求，并标注为Waiting状态，插入等待队列，一旦接收完dicom数据，后台会以间隔2s的Timer(程序初始化启动)，循环检测传输dicom数据是否完成，并将记录标为Pending状态。如果暂时未有case在运行算法，则该case立即执行，并将状态标为Running状态，完成后，发送结果给clario客户端；如果有其他case在运行，则等待下一轮check。
+
+const json = {
+    uid: req.uid,
+    mrn: req.mrn,
+    accession: req.accession,
+    status: req.status,
+    result: req.result || '',
+    prioritization: req.prioritization != null ? req.prioritization : -1,
+  };
+
+
+study instance uid
+imageCount
+
+确认部署
+
+queue的长度
+
+测试（单元测试。。。）
+
+framework
+
+nodejs test framework
+mock + SuperTest + Istanbul
+
+test src path:
+/src/test/router.js
+
+1. Analysis API(/analysis)
+
+Analysis API is to receive information on the incoming exam. It accepts the following fields: 
+
+method: POST
+
+params:
+
+uid (required)  
+
+The unique identifier to link exam information and DICOM data. 
+
+mrn (required)  
+
+The MRN of the patient. 
+
+accession (required)  
+
+The accession number of the patient. 
+
+imageCount (required)  
+
+Total DICOM data files count. AI analysis will not be performed until all image files are transferred. 
+
+addition (required)  
+
+The information from EMR/PACS structured as JSON object. 
+
+Sample JSON payload: 
+
+{ 
+
+"mrn":"A114789", 
+
+"accession":"A12155781", 
+
+"type": "ICH", 
+
+"imageCount":100, 
+
+"addition": { 
+
+"procedureName": "procedure name", 
+
+"modality": "CT", 
+
+"examReason": "", 
+
+"contrast": "", 
+
+"gender": "M or F", 
+
+"age": 40, 
+
+"history": "", 
+
+} 
+
+} 
+
+output:
+head:
+status code: 200
+
+body:
+{status: 'ok'}
+
+error output:
+head:
+status code: 400
+body:
+error messages(json)
+
+2. Feedback API(/feedback)
+
+Feedback result from client
+
+method: POST
+
+params:
+
+Feedback API accepts the following fields: 
+
+uid (required)  
+
+The unique identifier to link exam information and DICOM data. 
+
+mrn (required) 
+
+The MRN of the patient. 
+
+accession (required) 
+
+The accession number of the patient.  
+
+report (required) 
+
+The final radiology report which is written by radiologists. 
+
+Sample JSON payload: 
+
+{ 
+
+"mrn":"A114789", 
+
+"accession":"A12155781", 
+
+"report": "", 
+
+} 
+
+output:
+head:
+status code: 200
+body:
+{status: 'ok'}
+
+error output:
+head:
+status: 400
+body:
+error messages(json)
+
+3. Algorithm API(deepICH.py)
+
+Host predict_server
+  Hostname 10.199.10.9
+  User ubuntu
+  Port 22
+  
+  
+  
+  
+  https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
+python /data/datasets/ICH_510k_pipeline/scripts/dicom_to_nifti.py /data/datasets/ICH_510k_pipeline/dicom/CH_POS_1 /data/datasets/ICH_510k_pipeline/tmp_dicom_series /data/datasets/ICH_510k_pipeline/tmp_nifti_files  这里面CH_POS_1是放原始dicom数据的，tmp_dicom_series和tmp_nifiti_files这两个路径是用来盛放中间输出的。
+
+
+
+
+
+
+https://linuxconfig.org/nvidia-geforce-driver-installation-on-centos-7-linux-64-bit
+
+login as root
+
+nvidia driver installation:
+
+yum update
+yum install kernel-devel-$(uname -r) gcc
+echo 'blacklist nouveau' >> /etc/modprobe.d/blacklist.conf
+dracut /boot/initramfs-$(uname -r).img $(uname -r) --force
+reboot
+./NVIDIA-Linux-x86_64-384.111.run
+nvidia-smi
+
+pip installation:
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+python get-pip.py
+
+docker-ce installation:
+
+sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+sudo yum install docker-ce
+
+sudo systemctl start docker
+
+sudo docker run hello-world
+
+docker-compose installation:
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+
+docker-compose installation:
+
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.repo | \
+  sudo tee /etc/yum.repos.d/nvidia-docker.repo
+  
+sudo yum install nvidia-docker2
+sudo pkill -SIGHUP dockerd
 
