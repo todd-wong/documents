@@ -44,8 +44,17 @@ note: itk and vtk also can download on browsers.
 
     cd deep-vessel/image-analysis && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_FLAGS="-m64" -DCMAKE_CXX_FLAGS="-m64" && make install -j4
 
-output path: deep-vessel/image-analysis/bin
+    output path: deep-vessel/image-analysis/bin
 
+5. package python scripts, such like:
+
+    pyinstaller --hidden-import=sklearn.neighbors.typedefs --paths="/path/to/deep-vessel" cl_label_feature.py
+    
+    pyinstaller --hidden-import=sklearn.neighbors.typedefs --paths="/path/to/deep-vessel" --paths='/path/to/deep-vessel/image-analysis/python_bash_prototype/lib' FFR_Test.py
+    
+    pyinstaller --hidden-import=sklearn.neighbors.typedefs --paths='/path/to/deep-vessel/image-analysis/python_bash_prototype/lib' connectSmallTrees.py
+    
+    pyinstaller --hidden-import=sklearn.neighbors.typedefs --paths='/path/to/deep-vessel/image-analysis/python_bash_prototype/lib' disconnectSmallTrees.py
 
 ## Tool
 
