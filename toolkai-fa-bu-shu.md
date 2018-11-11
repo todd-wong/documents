@@ -3,6 +3,7 @@
 ### pull code
 
 1. deep-vessel
+
    * for Seattle Team(recommend)
 
      repo: git@gitlab.com:youbingy/deep-vessel.git
@@ -85,7 +86,10 @@ note: itk and vtk also can download on browsers.
  
 2. optionally, cp latest deepvessel algorithm to Tool
 
-    cd Tool && cp ${DEEP_VESSEL_SRC}/deep-vessel/image-analysis/bin . -fr
+   * c++ binary
+     cd Tool && cp ${DEEP_VESSEL_SRC}/deep-vessel/image-analysis/bin . -fr 
+   * python package
+     you need copy them to ./bin
     
 2. compile command
 
