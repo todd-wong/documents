@@ -15,7 +15,7 @@
 ## 技能清单
 
 * 精通c/c++/c++11(4年以上)
-* 掌握多进程多线程
+* 掌握多进程多线程及通信
 * 熟悉tcp/ip
 * 熟悉chromium中content/blink/v8/cc/net/base等
 * 熟悉设计模式/常用算法/Linux内核
