@@ -39,7 +39,7 @@ note: itk and vtk also can download on browsers.
 
 3. itk build statically
 
-    cd {ITK_SRC} && mkdir build && cd build && cmake -D BUILD_SHARED_LIBS=OFF -D CMAKE_BUILD_TYPE=Release -D Module_ITKReview=ON -D Module_ITKVtkGlue=ON -D Module_MinimalPathExtraction=ON .. && make install -j4
+    cd {ITK_SRC} && mkdir build && cd build && cmake -D BUILD_SHARED_LIBS=OFF -D CMAKE_BUILD_TYPE=Release -D Module_ITKReview=ON -D Module_ITKVtkGlue=ON -D Module_MinimalPathExtraction=ON .. && sudo make install -j4
 
 4. image-analysis build
 

@@ -320,3 +320,8 @@ curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.re
 sudo yum install nvidia-docker2
 sudo pkill -SIGHUP dockerd
 
+docker exec -it ich-mysql bash
+mysql -uroot
+use worklist_server;
+describe AnalysisRequests;
+select id,uid,status,result,createdAt,updatedAt from AnalysisRequests;
