@@ -516,4 +516,22 @@ class SomeCompilerSpecificName {
 };
 ```
 
+3. 编译时编程。
+```c++
+template <unsigned p, unsigned d>
+struct DoIsPrime {
+    static constexpr bool value = (p%d != 0) && DoIsPrime(p, d-1)::value;
+};
+
+template <unsigned p>
+struct DoIsPrime<p, 2> {
+    static constexpr bool value = (p%2 != 0);
+};
+
+template <unsigned p>
+struct IsPrime {
+    static constexpr bool value = DoIsPrime<p, p / 2>::value;
+};
+```
+
 [1]: http:en.m.wikipedia.org/wiki/Template_(C%2B%2B)
