@@ -12,6 +12,14 @@ graph LR;
   SL(*.a)--ld linking-->E(*.out)
 ```
 
+- 预处理阶段(Preprocess): 展开宏，包含头文件，去掉注释，存储行号等信息。
+
+- 编译阶段(compile): 词法分析，语法分析，语义分析，中间代码，代码优化等。
+
+- 汇编阶段(assembly): 生成二进制文件。
+
+- 链接阶段(link): 链接其他库，生成执行文件。
+
 在开始进入模板之前，我们先谈谈没有模板时，C++会遇到什么问题。假定我们要求两个int型数的最大值，一般我们会实现为：
 
 ``` c++
@@ -161,8 +169,6 @@ int main(int argc, char* argv[])
 
 
 4. **思考题**
-
-- 为什么函数模板没有偏特化支持？
 
 - 分析下面代码。
 ``` c++
@@ -394,6 +400,12 @@ int main(int argc, char* argv[])
     ...
 }
 ```
+
+5. **注意点**
+
+- 只有特化或偏特化，没有重载。
+- 模板成员函数不能为虚函数。
+
 ## 非类型模板(Nontype Template Parameter)
 
 1. **函数模板**
@@ -447,7 +459,7 @@ T const& Stack<T, MaxSize>::top() const {
 }
 ```
 
-3. **注意**
+3. **注意点**
 
 - 非模板参数支持整数，enum类型，指针，std::nullptr和左值引用，*不支持float和double*。
 
@@ -475,7 +487,33 @@ int main(int argc, char* argv[])
     return 0;
 }
 ```
-
 可变参数模板在std标准库中运用包括make_shared/thread/tuple等，在c++17中对可变参数模板进行了扩展，有兴趣的可以了解下折叠表达式(Fold Expressions)。
+
+## 补充
+
+1. auto使用
+
+```c++
+auto x = 3;
+
+template <typename T>
+void f(T x);
+```
+
+2. lamda使用
+
+```c++
+[](auto x, auto y) {
+    return x + y;
+}
+
+class SomeCompilerSpecificName {
+ public:
+  template <typename T1, typename T2>
+  auto operator() (T1 x, T2 y) const {
+      return x + y;
+  }
+};
+```
 
 [1]: http:en.m.wikipedia.org/wiki/Template_(C%2B%2B)
